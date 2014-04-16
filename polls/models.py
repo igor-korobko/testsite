@@ -8,8 +8,7 @@ class Cookie(models.Model):
     rating = models.IntegerField(default=0)
     name = models.CharField(max_length=200)
     description = models.TextField()
-    img = models.FilePathField(path="polls/static/polls/img/")
-    user_id = models.ForeignKey(User)
+    img = models.ImageField(upload_to="polls/static/polls/img")
 
 
 class Comments(models.Model):
