@@ -6,14 +6,36 @@
         {% for cookie in cookies %}
 
             <div class="media">
-                  <a class="pull-left" href="#">
-                    <img class="media-object" src="{{ MEDIA_URL }}{{ cookie.img }}" alt="cookie">
-                  </a>
-                  <div class="media-body">
+                <a class="pull-left" href="#">
+                    <img height="64" width="64" class="media-object" src="{{ MEDIA_URL }}{{ cookie.img }}" alt="cookie">
+                </a>
+                <div class="media-body">
                     <h4 class="media-heading">{{ cookie.name }}</h4>
                     {{ cookie.description }}
-                  </div>
+                </div>
+                <br/>
+                <div class="col-md-12" >
+                    <form action="">
+                        {% csrf_token %}
+                        <div class="col-md-3" >
+                            Оцените печеньку
+                        </div>
+                        {% for i in "12345" %}
+                            <div class="col-md-1" >
+                                <input type="radio" name="choice" id="choice{{ i }}" value="{{ i }}" />
+                                <label for="choice{{ i }}">{{ i }}</label>
+                            </div>
+                        {% endfor %}
+                        <div class="col-md-1" >
+                            <input class="btn btn-primary btn-small"  type="submit" value="Vote" />
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-12" >
+                    Рейтинг печеньки - {{ cookie.rating }}
+                </div>
             </div>
+             <br/> <br/>
 
         {% endfor %}
         </ul>

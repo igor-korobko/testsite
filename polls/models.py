@@ -1,15 +1,29 @@
+# from django.contrib.comments.views.moderation import delete
+from django.conf.global_settings import MEDIA_ROOT
 from django.db import models
-from django.utils import timezone
-import datetime
 from django.contrib.auth.models import User
-# from testsite.settings import PROJECT_MEDIA
+from django.db.models.signals import pre_save
+from django.core.files.storage import FileSystemStorage
 
 
 class Cookie(models.Model):
+
     rating = models.IntegerField(default=0)
     name = models.CharField(max_length=200)
     description = models.TextField()
     img = models.ImageField(upload_to="cookies")
+
+
+def del_img(sender, **k):
+    # pass
+    obj = k['instance']
+    f = FileSystemStorage()
+    f.delete(MEDIA_ROOT + sender.objects.get(pk=obj.pk).img.__str__())
+
+
+
+pre_save.connect(del_img, sender=Cookie)
+
 
 
 class Comments(models.Model):

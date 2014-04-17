@@ -4,12 +4,9 @@ from django import forms
 
 
 class CookieAdmin(admin.ModelAdmin):
-        # name = forms.CharField(widget=forms.Textarea)
-        # fields = ('name', 'description')
         fields = ('name', 'description', 'img')
         list_display = ('name', 'description', 'img')
         search_fields = ['name']
-
 
 admin.site.register(Cookie, CookieAdmin)
 

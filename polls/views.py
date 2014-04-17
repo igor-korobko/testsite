@@ -7,6 +7,7 @@ from polls.models import Cookie
 
 def index(request):
     cookies = Cookie.objects.all()
+    # range(1, 6)
     return render(request, "polls/index.html", {'cookies': cookies})
 
 
