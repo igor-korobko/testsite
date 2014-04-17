@@ -15,19 +15,20 @@
                 </div>
                 <br/>
                 <div class="col-md-12" >
-                    <form action="">
+                    <form action="{% url 'polls:vote' %}" method="post">
                         {% csrf_token %}
                         <div class="col-md-3" >
                             Оцените печеньку
                         </div>
                         {% for i in "12345" %}
                             <div class="col-md-1" >
+                                <input type="hidden" name="cookie_id" value="{{ cookie.id  }}">
                                 <input type="radio" name="choice" id="choice{{ i }}" value="{{ i }}" />
-                                <label for="choice{{ i }}">{{ i }}</label>
+                                <label for="choice{{ i }}"> {{ i }}</label>
                             </div>
                         {% endfor %}
                         <div class="col-md-1" >
-                            <input class="btn btn-primary btn-small"  type="submit" value="Vote" />
+                            <input class="btn btn-primary btn-small"  type="submit" value="Проголосовать" />
                         </div>
                     </form>
                 </div>
@@ -40,7 +41,7 @@
         {% endfor %}
         </ul>
     {% else %}
-        <p>No polls are available.</p>
+        <p>Таких печенек нет :(</p>
     {% endif %}
 
 

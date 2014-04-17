@@ -15,10 +15,10 @@ class Cookie(models.Model):
 
 
 def del_img(sender, **k):
-    # pass
     obj = k['instance']
-    f = FileSystemStorage()
-    f.delete(MEDIA_ROOT + sender.objects.get(pk=obj.pk).img.__str__())
+    if obj.img != sender.objects.get(pk=obj.pk).img:
+        f = FileSystemStorage()
+        f.delete(MEDIA_ROOT + sender.objects.get(pk=obj.pk).img.__str__())
 
 
 
