@@ -1,9 +1,25 @@
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+{% include 'polls/header.html' %}
+
+
+    {% if cookies %}
+        <ul>
+        {% for cookie in cookies %}
+
+            <div class="media">
+                  <a class="pull-left" href="#">
+                    <img class="media-object" src="{{ cookie.img }}" alt="cookie">
+                  </a>
+                  <div class="media-body">
+                    <h4 class="media-heading">{{ cookie.name }}</h4>
+                    {{ cookie.description }}
+                  </div>
+            </div>
+
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+
+
+{% include 'polls/footer.html' %}

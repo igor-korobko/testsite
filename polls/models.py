@@ -2,13 +2,14 @@ from django.db import models
 from django.utils import timezone
 import datetime
 from django.contrib.auth.models import User
+# from testsite.settings import PROJECT_MEDIA
 
 
 class Cookie(models.Model):
     rating = models.IntegerField(default=0)
     name = models.CharField(max_length=200)
     description = models.TextField()
-    img = models.ImageField(upload_to="polls/static/polls/img")
+    img = models.ImageField(upload_to="media",)
 
 
 class Comments(models.Model):

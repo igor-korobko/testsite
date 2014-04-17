@@ -2,10 +2,12 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
+from polls.models import Cookie
 
 
 def index(request):
-    pass
+    cookies = Cookie.objects.all()
+    return render(request, "polls/index.html", {'cookies': cookies})
 
 
 
