@@ -1,5 +1,5 @@
 {% include 'polls/header.html' %}
-
+{% load staticfiles %}
 
     {% if cookies %}
         <ul>
@@ -7,7 +7,7 @@
 
             <div class="media">
                   <a class="pull-left" href="#">
-                    <img class="media-object" src="{{ cookie.img }}" alt="cookie">
+                    <img class="media-object" src="{{ MEDIA_URL }}{{ cookie.img }}" alt="cookie">
                   </a>
                   <div class="media-body">
                     <h4 class="media-heading">{{ cookie.name }}</h4>

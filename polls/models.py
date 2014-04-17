@@ -9,7 +9,7 @@ class Cookie(models.Model):
     rating = models.IntegerField(default=0)
     name = models.CharField(max_length=200)
     description = models.TextField()
-    img = models.ImageField(upload_to="media",)
+    img = models.ImageField(upload_to="cookies")
 
 
 class Comments(models.Model):
