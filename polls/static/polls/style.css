@@ -16,3 +16,9 @@
     border-left-style: solid;
     border-left-width: 1px;
 }
+.fullwidth{
+    width:100%;
+}
+#poll_comment{
+    height: 34px;
+}

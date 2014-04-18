@@ -3,13 +3,25 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
-from polls.models import Cookie
-from django.contrib.auth import authenticate, login
-
+from polls.models import Cookie, Comments
+from django.contrib.auth import authenticate, login, get_user
+import functions
 
 def index(request):
     cookies = Cookie.objects.all()
-    return render(request, "polls/index.html", {'cookies': cookies})
+    # functions.get_cookie_comment(cookies, user_id.id)
+
+    result = []
+    for cookie in cookies:
+        # result.append(cookie.pk)
+        comments = Comments.objects.filter(cookie_id=cookie.pk)
+        # result.append(comments)
+        for comment in comments:
+            user_name = get_user(request)
+            user_name = user_name.username
+            result.append([cookie.pk, user_name, comment.comment])
+
+    return render(request, "polls/index.html", {'cookies': cookies, "result": result})
 
 
 def search(request):
@@ -41,15 +53,22 @@ def login_(request):
 
 
 def vote(request):
-    p = get_object_or_404(Cookie, pk=request.POST['cookie_id'])
-    p.rating += int(request.POST['choice'])
-    p.save()
-    return HttpResponseRedirect(reverse('polls:index'))
+    try:
+        p = get_object_or_404(Cookie, pk=request.POST['cookie_id'])
+        p.rating += int(request.POST['choice'])
+        p.save()
 
+        c = Comments(comment=request.POST['comment'], user_id=get_user(request), cookie_id=p)
+        c.save()
 
+        # return render(request, "polls/index.html", { "msg": "ok"})
+        return HttpResponseRedirect(reverse('polls:index'), { "msg": "ok"})
+    except(Exception):
+        pass
+        # return render(request, "polls/index.html", { "msg": "error"})
+        return HttpResponseRedirect(reverse('polls:index'), { "msg": "error"})
 
-
-
+# 'polls:index'
 
 
 

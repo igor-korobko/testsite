@@ -32,20 +32,29 @@
                                     </div>
                                 {% endfor %}
 
-                                <div class="col-md-3" >
-                                    <textarea placeholder="Отзыв"></textarea>
+                                <div class="col-md-5" >
+                                    <textarea id="poll_comment" name="comment" class="form-control" placeholder="Отзыв"></textarea>
                                 </div>
                             </div>
+
                             <div class="col-md-12" >
-                                <div class="col-md-2" >
-                                    <input class="btn btn-primary btn-small navbar"  type="submit" value="Проголосовать и оставить отзыв" />
-                                </div>
+                                    <input class="btn btn-primary btn-small fullwidth"  type="submit" value="Проголосовать и оставить отзыв" />
                             </div>
                         </form>
                     {%endif%}
                 </div>
                 <div class="col-md-12" >
-                    Рейтинг печеньки - {{ cookie.rating }}
+                    <br/>
+                    <b>Рейтинг печеньки - {{ cookie.rating }}</b>
+                    <br/>
+                    <br/>
+                    <b>Комментарии:</b>
+                    {% for field in result %}
+                        {% if field.0 == cookie.pk %}
+                            <p>{{ field.1 }} написал: {{ field.2 }}</p>
+                        {% endif %}
+                    {% endfor %}
+
                 </div>
             </div>
              <br/> <br/>
