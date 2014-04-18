@@ -1,6 +1,8 @@
 {% include 'polls/header.html' %}
 {% load staticfiles %}
 
+<div class="row">
+    <div class="col-md-9">
     {% if cookies %}
         <ul>
         {% for cookie in cookies %}
@@ -43,6 +45,26 @@
     {% else %}
         <p>Таких печенек нет :(</p>
     {% endif %}
+    </div>
 
+    <div id="sidebar" class="col-md-3" >
+        <h4>{{ msg }}</h4>
+        {% if not user.is_anonymous %}
+
+                <h4>Добро пожаловать {{ user }}</h4>
+
+        {% else %}
+            <!--<h4><a href="#" class="navbar-link" >Войти</a></h4>-->
+            <h4>Войти</h4>
+            <form method="post" action="{% url 'polls:login' %}">
+                {% csrf_token %}
+                <input type="text" class="form-control" name="login" placeholder="Логин" /><br>
+                <input type="password" class="form-control" name="pwd" placeholder="Пароль" /><br>
+                <input type="submit" value="Войти" class="btn btn-primary form-control" /><br><br>
+                <!--<input type="hidden" name="next" value="{{ next }}" />-->
+            </form>
+        {% endif%}
+    </div>
+</div>
 
 {% include 'polls/footer.html' %}

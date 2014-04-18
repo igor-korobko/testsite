@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 from polls.models import Cookie
+from django.contrib.auth import authenticate, login
 
 
 def index(request):
@@ -14,6 +16,26 @@ def search(request):
     try:
         cookies = Cookie.objects.filter(name=request.POST['search'])
         return render(request, "polls/index.html", {'cookies': cookies})
+    except(Exception):
+        return HttpResponseRedirect(reverse('polls:index'))
+
+
+def login_(request):
+
+    try:
+        log = request.POST['login']
+        pwd = request.POST['pwd']
+        user = authenticate(username=log, password=pwd)
+        cookies = Cookie.objects.all()
+        message = ""
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+        else:
+            message = "Не верный логин или пароль"
+
+        return render(request, "polls/index.html", {"cookies": cookies, "msg": message})
+
     except(Exception):
         return HttpResponseRedirect(reverse('polls:index'))
 

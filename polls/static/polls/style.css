@@ -4,3 +4,15 @@
     /*height: content;*/
     background: rgb(228, 228, 228);
 }
+#sidebar{
+    right:0;
+    text-align:center;
+    height: content;
+    background: white;
+    background-color: rgb(248, 248, 248);
+    border-left-color: rgb(231, 231, 231);
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    border-left-style: solid;
+    border-left-width: 1px;
+}
