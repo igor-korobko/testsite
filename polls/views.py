@@ -7,18 +7,21 @@ from polls.models import Cookie
 
 def index(request):
     cookies = Cookie.objects.all()
-    # range(1, 6)
     return render(request, "polls/index.html", {'cookies': cookies})
 
 
-def vote(request):
+def search(request):
+    try:
+        cookies = Cookie.objects.filter(name=request.POST['search'])
+        return render(request, "polls/index.html", {'cookies': cookies})
+    except(Exception):
+        return HttpResponseRedirect(reverse('polls:index'))
 
+
+def vote(request):
     p = get_object_or_404(Cookie, pk=request.POST['cookie_id'])
     p.rating += int(request.POST['choice'])
     p.save()
-    cookies = Cookie.objects.all()
-            # return render(request, "polls/index.html", {'cookies': cookies})
-
     return HttpResponseRedirect(reverse('polls:index'))
 
 

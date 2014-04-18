@@ -16,9 +16,18 @@
                   <div class="navbar-brand" >Любителям печенек</div>
               </div>
               <ul class="nav navbar-nav">
-
                 <li><a href="#">Главная</a></li>
                 <li><a href="#">Печеньки</a></li>
               </ul>
+              <ul class="nav navbar-nav  navbar-right">
+                <li><a href="#">Войти</a></li>
+              </ul>
+              <form method="post" action="{% url 'polls:search' %}" class="navbar-form navbar-right" role="search">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <input name="search" type="text" class="form-control" placeholder="Название печеньки" />
+                  </div>
+                  <button type="submit" class="btn btn-default" value="find">Найти</button>
+              </form>
           </div>
         </nav>

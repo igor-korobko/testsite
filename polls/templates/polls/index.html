@@ -22,7 +22,7 @@
                         </div>
                         {% for i in "12345" %}
                             <div class="col-md-1" >
-                                <input type="hidden" name="cookie_id" value="{{ cookie.id  }}">
+                                <input type="hidden" name="cookie_id" value="{{ cookie.id  }}" />
                                 <input type="radio" name="choice" id="choice{{ i }}" value="{{ i }}" />
                                 <label for="choice{{ i }}"> {{ i }}</label>
                             </div>

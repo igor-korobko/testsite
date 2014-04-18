@@ -10,4 +10,5 @@ urlpatterns = patterns('',
     # url(r'^(?P<question_id>\d+)$', views.detail, name='detail'),
     # url(r'^(?P<question_id>\d+)/results/$', views.results, name='results'),
     url(r'^vote/$', views.vote, name='vote'),
+    url(r'^search/$', views.search, name='search'),
 )
