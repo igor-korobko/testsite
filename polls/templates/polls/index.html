@@ -17,22 +17,32 @@
                 </div>
                 <br/>
                 <div class="col-md-12" >
-                    <form action="{% url 'polls:vote' %}" method="post">
-                        {% csrf_token %}
-                        <div class="col-md-3" >
-                            Оцените печеньку
-                        </div>
-                        {% for i in "12345" %}
-                            <div class="col-md-1" >
-                                <input type="hidden" name="cookie_id" value="{{ cookie.id  }}" />
-                                <input type="radio" name="choice" id="choice{{ i }}" value="{{ i }}" />
-                                <label for="choice{{ i }}"> {{ i }}</label>
+                    {% if not user.is_anonymous %}
+                        <form action="{% url 'polls:vote' %}" method="post">
+                            {% csrf_token %}
+                            <div class="col-md-12" >
+                                <div class="col-md-2" >
+                                    Оцените печеньку
+                                </div>
+                                {% for i in "12345" %}
+                                    <div class="col-md-1" >
+                                        <input type="hidden" name="cookie_id" value="{{ cookie.id  }}" />
+                                        <input type="radio" name="choice" id="choice{{ i }}" value="{{ i }}" />
+                                        <label for="choice{{ i }}"> {{ i }}</label>
+                                    </div>
+                                {% endfor %}
+
+                                <div class="col-md-3" >
+                                    <textarea placeholder="Отзыв"></textarea>
+                                </div>
                             </div>
-                        {% endfor %}
-                        <div class="col-md-1" >
-                            <input class="btn btn-primary btn-small"  type="submit" value="Проголосовать" />
-                        </div>
-                    </form>
+                            <div class="col-md-12" >
+                                <div class="col-md-2" >
+                                    <input class="btn btn-primary btn-small navbar"  type="submit" value="Проголосовать и оставить отзыв" />
+                                </div>
+                            </div>
+                        </form>
+                    {%endif%}
                 </div>
                 <div class="col-md-12" >
                     Рейтинг печеньки - {{ cookie.rating }}
