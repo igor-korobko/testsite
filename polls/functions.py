@@ -1,12 +1,13 @@
-from models import Comments
+from polls.models import Cookie, Comments
+from django.contrib.auth import authenticate, login, get_user
+from django.contrib.auth.models import User
 
-from django.contrib.auth import get_user
 
-
-def get_cookie_comment(cookie_list, user_id):
+def get_comments(request, cookies):
     result = []
-    for cookie in cookie_list:
-        result.append(cookie.pk)
-        comments = Comments.objects.get(cookie_id=cookie.pk, user_id=user_id)
+    for cookie in cookies:
+        comments = Comments.objects.filter(cookie_id=cookie.pk)
         for comment in comments:
-            result[cookie.pk].append([user_id,comment])
+            user_name = User.objects.get(pk=comment.user_id.pk).username
+            result.append([cookie.pk, user_name, comment.comment])
+    return {'cookies': cookies, "result": result}

@@ -16,8 +16,8 @@
                   <div class="navbar-brand" >Любителям печенек</div>
               </div>
               <ul class="nav navbar-nav">
-                <li><a href="#">Главная</a></li>
-                <li><a href="#">Печеньки</a></li>
+                <li><a href="{% url 'polls:index' %}">Главная</a></li>
+                <li><a href="{% url 'polls:cookies' %}">Печеньки</a></li>
               </ul>
               <form method="post" action="{% url 'polls:search' %}" class="navbar-form navbar-right" role="search">
                   {% csrf_token %}
