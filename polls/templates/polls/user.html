@@ -1,0 +1,16 @@
+{% extends 'polls/base.html' %}
+        {% block page_name %}Личный кабинет{% endblock %}
+        {% block posts %}
+<div class="col-md-4" ></div>
+<div class="col-md-6" >
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>Ник: {{ user.username }}</p>
+        <p>Имя: <input type="text" class="form-control"  name="first_name" value="{{ user.first_name }}" /></p>
+        <p>Фамилия: <input type="text" class="form-control"  name="last_name" value="{{ user.last_name }}" /></p>
+        <p>O себе: <textarea class="form-control" name="about" >{{ about }}</textarea></p>
+        <p>Фото: <input type="file" class="form-control" name="photo" /></p>
+    </form>
+</div>
+<div class="col-md-2" ></div>
+        {% endblock %}
