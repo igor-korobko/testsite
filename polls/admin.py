@@ -1,5 +1,5 @@
 from django.contrib import admin
-from polls.models import Cookie
+from polls.models import Cookie, Comments, Relations
 from django import forms
 
 
@@ -8,7 +8,22 @@ class CookieAdmin(admin.ModelAdmin):
         list_display = ('name', 'description', 'img')
         search_fields = ['name']
 
+
+class CommentsAdmin(admin.ModelAdmin):
+        fields = ('cookie_id', 'user_id', 'comment')
+        list_display = ('cookie_id', 'user_id', 'comment')
+        search_fields = ['comment']
+
+
+class RelationsAdmin(admin.ModelAdmin):
+        fields = ('cookie_id', 'user_id')
+        list_display = ('cookie_id', 'user_id')
+
+
 admin.site.register(Cookie, CookieAdmin)
+admin.site.register(Comments, CommentsAdmin)
+admin.site.register(Relations, RelationsAdmin)
+
 
 # from polls.models import Question, Choice
 

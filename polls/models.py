@@ -16,9 +16,14 @@ class Cookie(models.Model):
 
 def del_img(sender, **k):
     obj = k['instance']
-    if obj.img != sender.objects.get(pk=obj.pk).img:
-        f = FileSystemStorage()
-        f.delete(MEDIA_ROOT + sender.objects.get(pk=obj.pk).img.__str__())
+    try:
+        old_obj = sender.objects.get(pk=obj.pk)
+    except(sender.DoesNotExist):
+        pass
+    else:
+        if obj.img != old_obj.img:
+            f = FileSystemStorage()
+            f.delete(MEDIA_ROOT + sender.objects.get(pk=obj.pk).img.__str__())
 
 
 def del_img_with_post(sender, **k):
@@ -39,5 +44,5 @@ class Comments(models.Model):
 
 class Relations(models.Model):
     user_id = models.ForeignKey(User)
-    comment_id = models.ForeignKey(Comments)
+    cookie_id = models.ForeignKey(Cookie)
 

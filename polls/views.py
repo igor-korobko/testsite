@@ -4,50 +4,54 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 from polls.models import Cookie, Comments
-from django.contrib.auth import authenticate, login, get_user
+from django.contrib.auth import authenticate, login, get_user, logout
 import functions
 
 
 def index(request):
     cookies = Cookie.objects.all().order_by('-rating')[:3]
-    result = functions.get_comments(request, cookies)
+    result = functions.get_vote_form(request, cookies)
     return render(request, "polls/index.html", result)
 
 
 def cookies_(request):
     cookies = Cookie.objects.all()
-    result = functions.get_comments(request, cookies)
+    result = functions.get_vote_form(request, cookies)
     return render(request, "polls/cookies.html", result)
 
 
 def search(request):
-    try:
+    if 'search' in request.POST:
         cookies = Cookie.objects.filter(name=request.POST['search'])
-        result = functions.get_comments(request, cookies)
+        result = functions.get_vote_form(request, cookies)
         return render(request, "polls/cookies.html", result)
-    except(Exception):
-        return HttpResponseRedirect(reverse('polls:index'))
+    else:
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 def login_(request):
 
-    try:
+    if 'login' in request.POST and 'pwd' in request.POST:
         log = request.POST['login']
         pwd = request.POST['pwd']
         user = authenticate(username=log, password=pwd)
-        message = ""
+        # message = ""
         if user is not None:
             if user.is_active:
                 login(request, user)
-        else:
-            message = "Не верный логин или пароль"
+        # else:
+        #     message = "Не верный логин или пароль"
 
         cookies = Cookie.objects.all()
-        result = functions.get_comments(request, cookies)
-        return render(request, "polls/index.html", result, {'message': message})
+        result = functions.get_vote_form(request, cookies)
+        return render(request, "polls/index.html", result)
+    else:
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
-    except(Exception):
-        return HttpResponseRedirect(reverse('polls:index'))
+
+def logout_(request):
+    logout(request)
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 def vote(request):

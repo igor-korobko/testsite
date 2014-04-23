@@ -17,7 +17,8 @@
                 </div>
                 <br/>
                 <div class="col-md-12" >
-                    {% if not user.is_anonymous %}
+                    {{ cookies_id_list }}
+                    {% if not user.is_anonymous and cookie.pk not in cookies_id_list %}
                         <form action="{% url 'polls:vote' %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="cookie_id" value="{{ cookie.id  }}" />
@@ -72,7 +73,8 @@
         {% if not user.is_anonymous %}
 
                 <h4>Добро пожаловать {{ user }}</h4>
-
+                <a href="{% url 'polls:logout' %}" class="navbar-link" >Выйти</a>
+                <br />
         {% else %}
             <!--<h4><a href="#" class="navbar-link" >Войти</a></h4>-->
             <h4>Войти</h4>

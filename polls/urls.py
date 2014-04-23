@@ -12,5 +12,6 @@ urlpatterns = patterns('',
     url(r'^vote/$', views.vote, name='vote'),
     url(r'^search/$', views.search, name='search'),
     url(r'^login/$', views.login_, name='login'),
+    url(r'^logout/$', views.logout_, name='logout'),
     url(r'^cookies/$', views.cookies_, name='cookies'),
 )
