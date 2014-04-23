@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
-from polls.models import Cookie, Comments
+from polls.models import Cookie, Comments, Relations
 from django.contrib.auth import authenticate, login, get_user, logout
 import functions
 
@@ -46,7 +46,7 @@ def login_(request):
         result = functions.get_vote_form(request, cookies)
         return render(request, "polls/index.html", result)
     else:
-        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+        return HttpResponseRedirect(reverse('polls:index'))
 
 
 def logout_(request):
@@ -62,5 +62,7 @@ def vote(request):
         if len(request.POST['comment']) > 0:
             c = Comments(comment=request.POST['comment'], user_id=get_user(request), cookie_id=p)
             c.save()
+        r = Relations(user_id=get_user(request), cookie_id=p)
+        r.save()
 
     return HttpResponseRedirect(request.META['HTTP_REFERER'])

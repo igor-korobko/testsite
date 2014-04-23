@@ -17,8 +17,7 @@
                 </div>
                 <br/>
                 <div class="col-md-12" >
-                    {{ cookies_id_list }}
-                    {% if not user.is_anonymous and cookie.pk not in cookies_id_list %}
+                    {% if not user.is_anonymous and cookie.pk not in votes_list %}
                         <form action="{% url 'polls:vote' %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="cookie_id" value="{{ cookie.id  }}" />
