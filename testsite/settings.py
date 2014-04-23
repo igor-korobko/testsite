@@ -95,3 +95,5 @@ STATICFILES_DIRS = (
     PROJECT_STATIC_ROOT,
 
 )
+
+AUTH_PROFILE_MODULE = 'testsite.userprofile'
