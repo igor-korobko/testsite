@@ -68,5 +68,3 @@ def vote(request):
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
-def user_(request):
-    return render(request, "polls/user.html")#, result

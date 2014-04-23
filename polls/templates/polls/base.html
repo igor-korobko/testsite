@@ -75,7 +75,7 @@
         <h4>{{ msg }}</h4>
         {% if not user.is_anonymous %}
 
-                <h4>Добро пожаловать <a href="{% url 'polls:user' %}" class="navbar-link" >{{ user }}</a></h4>
+                <h4>Добро пожаловать <a href="{% url 'userprofile:user' %}" class="navbar-link" >{{ user }}</a></h4>
                 <a href="{% url 'polls:logout' %}" class="navbar-link" >Выйти</a>
                 <br />
         {% else %}

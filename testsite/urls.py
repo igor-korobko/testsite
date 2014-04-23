@@ -11,5 +11,6 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
     url(r'^$', include('polls.urls')),
     url(r'^polls/', include('polls.urls', namespace="polls")),
+    url(r'^userprofile/', include('userprofile.urls', namespace="userprofile")),
     url(r'^admin/', include(admin.site.urls)),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
