@@ -51,7 +51,7 @@ def login_(request):
 
 def logout_(request):
     logout(request)
-    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    return HttpResponseRedirect(reverse('polls:index'))
 
 
 def vote(request):

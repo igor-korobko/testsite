@@ -1,0 +1,17 @@
+{% extends 'polls/base.html' %}
+{% load staticfiles %}
+        {% block page_name %}Личный кабинет{% endblock %}
+        {% block posts %}
+<div class="col-md-4" ></div>
+<div class="col-md-6" >
+
+        <img height="64" width="64" src="{{ MEDIA_URL }}{{ prof.photo }}" class="media-object" >
+        <p>Ник: {{ pub_user.username }}</p>
+        <p>Имя: {{ pub_user.first_name }}</p>
+        <p>Фамилия: {{ pub_user.last_name }}</p>
+        <p>Почта: {{ pub_user.email }}</p>
+        <p>O себе: {{ prof.about }}</p>
+
+</div>
+<div class="col-md-2" ></div>
+        {% endblock %}

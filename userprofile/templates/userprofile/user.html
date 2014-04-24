@@ -1,15 +1,21 @@
 {% extends 'polls/base.html' %}
+{% load staticfiles %}
         {% block page_name %}Личный кабинет{% endblock %}
         {% block posts %}
 <div class="col-md-4" ></div>
 <div class="col-md-6" >
-    <form method="post" enctype="multipart/form-data">
+    <form action="{% url 'userprofile:user' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        <img height="64" width="64" src="{{ MEDIA_URL }}{{ prof.photo }}" class="media-object" >
         <p>Ник: {{ user.username }}</p>
         <p>Имя: <input type="text" class="form-control"  name="first_name" value="{{ user.first_name }}" /></p>
         <p>Фамилия: <input type="text" class="form-control"  name="last_name" value="{{ user.last_name }}" /></p>
-        <p>O себе: <textarea class="form-control" name="about" >{{ about }}</textarea></p>
-        <p>Фото: <input type="file" class="form-control" name="photo" /></p>
+        <p>Почта: <input type="email" class="form-control"  name="email" value="{{ user.email }}" /></p>
+        <p>Новый пароль: <input type="password" class="form-control" name="password" /></p>
+        <p>O себе: <textarea class="form-control" name="about" >{{ prof.about }}</textarea></p>
+        <p>Старое фото: {{ prof.photo }}</p>
+        <p>Новое фото: <input type="file" class="form-control" name="photo"/></p>
+        <br/>
         <p><input type="submit" class="btn btn-primary fullwidth" name="save" value="Сохранить"/></p>
 
     </form>

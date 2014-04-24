@@ -55,7 +55,7 @@
                         <b>Комментарии:</b>
                         {% for field in result %}
                             {% if field.0 == cookie.pk %}
-                                <p>{{ field.1 }} написал: {{ field.2 }}</p>
+                                <p><a href="{% url 'userprofile:public' field.1 %}" >{{ field.1 }}</a> написал: {{ field.2 }}</p>
                             {% endif %}
                         {% endfor %}
                     {% endblock comments %}

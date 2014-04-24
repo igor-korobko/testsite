@@ -1,7 +1,10 @@
 from django.contrib import admin
 from polls.models import Cookie, Comments, Relations
-from django import forms
-
+from userprofile.models import MyUserModel
+# from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user
+from django.http import request
 
 class CookieAdmin(admin.ModelAdmin):
         fields = ('name', 'description', 'img')
@@ -20,9 +23,19 @@ class RelationsAdmin(admin.ModelAdmin):
         list_display = ('cookie_id', 'user_id')
 
 
+class UserAdmin(admin.ModelAdmin):
+    model = [User, MyUserModel]
+    # list_display = ("username", "email")
+
+class AdminProfile(admin.ModelAdmin):
+    list = [UserAdmin]
+    # model = User
+    # list_display = ("about", "photo")
+
 admin.site.register(Cookie, CookieAdmin)
 admin.site.register(Comments, CommentsAdmin)
 admin.site.register(Relations, RelationsAdmin)
+admin.site.register(MyUserModel, AdminProfile)
 
 
 # from polls.models import Question, Choice

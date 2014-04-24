@@ -1,9 +1,13 @@
-
+html,body{
+height:100%;
+}
 #main{
-    position:absolute;
-    /*height: content;*/
+    position:relative;
+    height: content;
+    min-height:100%;
     background: rgb(228, 228, 228);
 }
+
 #sidebar{
     right:0;
     text-align:center;
