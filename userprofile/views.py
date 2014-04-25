@@ -92,10 +92,10 @@ def register_(request):
             user = User.objects.create_user(username=request.POST["nik_name"], email=request.POST["email"], password=request.POST["password"])
         except(Exception):
             error = "Ошибка регистрации"
-            return render(request, "userprofile/register.html",{"err_msg": error})
+            return render(request, "userprofile/register.html", {"err_msg": error})
         else:
             user.save()
-            login(request,user)
-        return HttpResponseRedirect(reverse('polls:index'))
+            # login(request,user)
+            return HttpResponseRedirect(reverse('polls:index'))
     else:
         return render(request, "userprofile/register.html")
