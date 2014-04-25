@@ -67,7 +67,7 @@ def user_(request):
             profile = MyUserModel.objects.get_or_create(user=user)
             msg = profile[0].user
 
-        return render(request, "userprofile/user.html", {"prof": profile[0], "msg": msg})
+        return render(request, "userprofile/user.html", {"prof": profile[0]})
     else:
         return HttpResponseRedirect(reverse('polls:index'))
 
