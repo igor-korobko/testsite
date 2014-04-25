@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     url(r'^polls/', include('polls.urls', namespace="polls")),
     url(r'^userprofile/', include('userprofile.urls', namespace="userprofile")),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'', include('social_auth.urls')),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

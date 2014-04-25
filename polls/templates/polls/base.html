@@ -1,5 +1,7 @@
 {% include 'polls/header.html' %}
 {% load staticfiles %}
+
+
 <h2>{% block page_name %}Самые популярные печеньки{% endblock %}</h2>
 <div class="row">
     <div class="col-md-9">
@@ -18,7 +20,7 @@
                     <br/>
                     <div class="col-md-12" >
                     {% block vote %}
-                        {% if not user.is_anonymous and cookie.pk not in votes_list %}
+                        {% if not user.is_anonymous and user not in cookie.user.all %}
                             <form action="{% url 'polls:vote' %}" method="post">
                                 {% csrf_token %}
                                 <input type="hidden" name="cookie_id" value="{{ cookie.id  }}" />
@@ -83,8 +85,11 @@
             <h4>Войти</h4>
             <form method="post" action="{% url 'userprofile:login' %}">
                 {% csrf_token %}
-                <input type="text" class="form-control" name="login" placeholder="Логин" /><br>
-                <input type="password" class="form-control" name="pwd" placeholder="Пароль" /><br>
+                <!--<input type="text" class="form-control" name="login" placeholder="Логин" /><br>-->
+                <!--<input type="password" class="form-control" name="pwd" placeholder="Пароль" /><br>-->
+                {% for elem in form %}
+                {{ elem }}<br />
+                {% endfor %}
                 <input type="submit" value="Войти" class="btn btn-primary form-control" /><br><br>
                 <a href="{% url 'userprofile:register' %}" class="navbar-link" >Зарегестрироваться</a><br><br>
             </form>

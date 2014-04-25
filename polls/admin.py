@@ -1,5 +1,5 @@
 from django.contrib import admin
-from polls.models import Cookie, Comments, Relations
+from polls.models import Cookie, Comments
 from userprofile.models import MyUserModel
 # from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
@@ -18,9 +18,9 @@ class CommentsAdmin(admin.ModelAdmin):
         search_fields = ['comment']
 
 
-class RelationsAdmin(admin.ModelAdmin):
-        fields = ('cookie_id', 'user_id')
-        list_display = ('cookie_id', 'user_id')
+# class RelationsAdmin(admin.ModelAdmin):
+#         fields = ('cookie_id', 'user_id')
+#         list_display = ('cookie_id', 'user_id')
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -34,7 +34,7 @@ class AdminProfile(admin.ModelAdmin):
 
 admin.site.register(Cookie, CookieAdmin)
 admin.site.register(Comments, CommentsAdmin)
-admin.site.register(Relations, RelationsAdmin)
+# admin.site.register(Relations, RelationsAdmin)
 admin.site.register(MyUserModel, AdminProfile)
 
 

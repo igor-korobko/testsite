@@ -3,14 +3,17 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
-from polls.models import Cookie, Comments, Relations
+from polls.models import Cookie, Comments
 from django.contrib.auth import authenticate, login, get_user, logout
 import functions
+from userprofile.forms import LoginForm
 
 
 def index(request):
     cookies = Cookie.objects.all().order_by('-rating')[:3]
     result = functions.get_vote_form(request, cookies)
+    form = LoginForm()
+    result.update({"form": form})
     return render(request, "polls/index.html", result)
 
 
@@ -31,14 +34,15 @@ def search(request):
 
 def vote(request):
     if 'choice' in request.POST:
-        p = get_object_or_404(Cookie, pk=request.POST['cookie_id'])
-        p.rating += int(request.POST['choice'])
-        p.save()
+        cookie_obj = get_object_or_404(Cookie, pk=request.POST['cookie_id'])
+        cookie_obj.rating += int(request.POST['choice'])
+        cookie_obj.user.add(get_user(request))
+        cookie_obj.save()
         if len(request.POST['comment']) > 0:
-            c = Comments(comment=request.POST['comment'], user_id=get_user(request), cookie_id=p)
-            c.save()
-        r = Relations(user_id=get_user(request), cookie_id=p)
-        r.save()
+            comment_obj = Comments(comment=request.POST['comment'], user_id=get_user(request), cookie_id=cookie_obj)
+            comment_obj.save()
+        # r = Relations(user_id=get_user(request), cookie_id=p)
+        # r.save()
 
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
