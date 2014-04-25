@@ -29,32 +29,6 @@ def search(request):
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
-def login_(request):
-
-    if 'login' in request.POST and 'pwd' in request.POST:
-        log = request.POST['login']
-        pwd = request.POST['pwd']
-        user = authenticate(username=log, password=pwd)
-        message = ""
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-        else:
-            message = "Не верный логин или пароль"
-
-        cookies = Cookie.objects.all()
-        result = functions.get_vote_form(request, cookies)
-        result.update({'msg': message})
-        return render(request, "polls/index.html", result)
-    else:
-        return HttpResponseRedirect(reverse('polls:index'))
-
-
-def logout_(request):
-    logout(request)
-    return HttpResponseRedirect(reverse('polls:index'))
-
-
 def vote(request):
     if 'choice' in request.POST:
         p = get_object_or_404(Cookie, pk=request.POST['cookie_id'])
