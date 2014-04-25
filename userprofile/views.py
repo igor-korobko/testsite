@@ -43,10 +43,10 @@ def user_(request):
         if 'save' in request.POST:
             try:
                 profile = MyUserModel.objects.get(user=user)
-                msg = "get"
+                # msg = "get"
             except(MyUserModel.DoesNotExist):
                 profile = MyUserModel(about=request.POST["about"], photo=request.POST["photo"], user=user)
-                msg = "new"
+                # msg = "new"
             else:
                 profile.about = request.POST["about"]
                 if 'photo' in request.FILES:
@@ -65,7 +65,7 @@ def user_(request):
             user_info.save()
         else:
             profile = MyUserModel.objects.get_or_create(user=user)
-            msg = profile[0].user
+            # msg = profile[0].user
 
         return render(request, "userprofile/user.html", {"prof": profile[0]})
     else:
