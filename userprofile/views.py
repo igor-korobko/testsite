@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
-from django.contrib.auth import get_user
+from django.contrib.auth import get_user, login
 # from forms import MyUserProfileForm
 from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
@@ -51,3 +52,17 @@ def public_(request, user_name):
     else:
         return HttpResponseRedirect(reverse('polls:index'))
 
+def register_(request):
+    pass
+    if request.method == "POST":
+        try:
+            user = User.objects.create_user(username=request.POST["nik_name"], email=request.POST["email"], password=request.POST["password"])
+        except(Exception):
+            error = "Ошибка регистрации"
+            return render(request, "userprofile/register.html",{"err_msg": error})
+        else:
+            user.save()
+            login(request,user)
+        return HttpResponseRedirect(reverse('polls:index'))
+    else:
+        return render(request, "userprofile/register.html")

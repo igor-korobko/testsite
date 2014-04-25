@@ -72,7 +72,7 @@
 
     <div id="sidebar" class="col-md-3" >
     {% block user %}
-        <h4>{{ msg }}</h4>
+        <p class="error" >{{ msg }}</p>
         {% if not user.is_anonymous %}
 
                 <h4>Добро пожаловать <a href="{% url 'userprofile:user' %}" class="navbar-link" >{{ user }}</a></h4>
@@ -86,7 +86,7 @@
                 <input type="text" class="form-control" name="login" placeholder="Логин" /><br>
                 <input type="password" class="form-control" name="pwd" placeholder="Пароль" /><br>
                 <input type="submit" value="Войти" class="btn btn-primary form-control" /><br><br>
-                <!--<input type="hidden" name="next" value="{{ next }}" />-->
+                <a href="{% url 'userprofile:register' %}" class="navbar-link" >Зарегестрироваться</a><br><br>
             </form>
         {% endif%}
     {% endblock user %}

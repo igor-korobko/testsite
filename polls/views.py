@@ -35,15 +35,16 @@ def login_(request):
         log = request.POST['login']
         pwd = request.POST['pwd']
         user = authenticate(username=log, password=pwd)
-        # message = ""
+        message = ""
         if user is not None:
             if user.is_active:
                 login(request, user)
-        # else:
-        #     message = "Не верный логин или пароль"
+        else:
+            message = "Не верный логин или пароль"
 
         cookies = Cookie.objects.all()
         result = functions.get_vote_form(request, cookies)
+        result.update({'msg': message})
         return render(request, "polls/index.html", result)
     else:
         return HttpResponseRedirect(reverse('polls:index'))
