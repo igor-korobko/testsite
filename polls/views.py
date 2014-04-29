@@ -43,16 +43,21 @@ def vote(request):
                 # // проверяем, полученное значение POST["rating"]
                 for radio_values in vote_form.Meta.CHOICES:
                     all_values.append(radio_values[0])
-                # // если такое есть, то записываем
-                if request.POST["rating"] in all_values:
-                    cookie_obj.rating = old_rating + int(request.POST["rating"])
-                    cookie_obj.save()
-                    vote_form.save()
+                # // что бы ещё не голосовал
+                if get_user(request) not in cookie_obj.user.all():
+                    # // если такое есть, то записываем
+                    if request.POST["rating"] in all_values:
+                        cookie_obj.rating = old_rating + int(request.POST["rating"])
+                        cookie_obj.user.add(get_user(request))
+                        cookie_obj.save()
+                        vote_form.save()
 
         if len(request.POST["comment"]) > 0:
             comment_obj = Comments(cookie_id=cookie_obj, user_id=get_user(request))
             comment_form = CommentForm(request.POST, instance=comment_obj)
             if comment_form.is_valid():
+                cookie_obj.user.add(get_user(request))
+                cookie_obj.save()
                 comment_form.save()
 
 
