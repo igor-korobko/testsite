@@ -7,7 +7,6 @@
     <form action="{% url 'userprofile:user' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ user_form }}
-        {{ password_form }}
         {{ profile_form }}
         <!--<img height="64" width="64" src="{{ MEDIA_URL }}{{ prof.photo }}" class="media-object" >-->
         <!--<p>Ник: {{ user.username }}</p>-->

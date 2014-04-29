@@ -29,20 +29,20 @@
                                     <div class="col-md-2" >
                                         Оцените печеньку
                                     </div>
-                                    {% for i in "12345" %}
-                                        <div class="col-md-1" >
-                                            <input type="radio" name="choice" id="choice{{ i }}" value="{{ i }}" />
-                                            <label for="choice{{ i }}"> {{ i }}</label>
+
+                                    {% for i in voteForm.rating %}
+                                        <div class="col-md-1" style="float:left;">
+                                             {{ i }}
                                         </div>
                                     {% endfor %}
 
                                     <div class="col-md-5" >
-                                        <textarea id="poll_comment" name="comment" class="form-control" placeholder="Отзыв"></textarea>
+                                        {{ commentForm.comment }}
                                     </div>
                                 </div>
 
                                 <div class="col-md-12" >
-                                        <input class="btn btn-primary btn-small fullwidth"  type="submit" value="Проголосовать и оставить отзыв" />
+                                        <input class="btn btn-primary btn-small fullwidth" name="vote_btn"  type="submit" value="Проголосовать и оставить отзыв" />
                                 </div>
                             </form>
                         {%endif%}

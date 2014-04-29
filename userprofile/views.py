@@ -3,8 +3,9 @@ from django.contrib.auth.forms import PasswordChangeForm, UserChangeForm
 from django.forms.models import modelformset_factory
 from django.shortcuts import render, get_object_or_404, render_to_response, redirect
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user, login, authenticate, logout
-from forms import LoginForm, UserProfileForm, UserForm
+from forms import LoginForm, UserProfileForm, UserForm, RegisterForm
 from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
 from models import MyUserModel
@@ -12,6 +13,8 @@ from django.core.urlresolvers import reverse
 from polls import functions
 from polls.models import Cookie
 from django import forms
+from userprofile.forms import RegisterForm
+
 
 def login_(request):
     # message = "sss"
@@ -52,12 +55,17 @@ def logout_(request):
 
 
 def user_(request):
-    # user = User.objects.get(username="admin")
-    # user.set_password("admin")
-    # user.save()
-    # return render(request, 'userprofile/user.html')
-    u_profile = MyUserModel.objects.get(user=get_user(request))
+
+    # user = User.objects.get(pk=get_user(request).pk)
+    # u_profile = MyUserModel.objects.get(user=user)
+    # profile_form = MultiUserForm(instance=u_profile)
+    # return render(request, 'userprofile/user.html', {'profile_form': profile_form})
+
     user = User.objects.get(pk=get_user(request).pk)
+    try:
+        u_profile = MyUserModel.objects.get(user=user)
+    except(Exception):
+        u_profile = MyUserModel(user=user)
     if request.method == "POST":
 
         profile_form = UserProfileForm(request.POST, request.FILES, instance=u_profile)
@@ -66,18 +74,16 @@ def user_(request):
 
         user_form = UserForm(request.POST, instance=user)
         if user_form.is_valid():
+            user_form.save(commit=False)
+            if "password" in request.POST:
+                user.set_password(request.POST["password"])
             user_form.save()
 
-        # password_form = PasswordChangeForm(user)
-        # if password_form.is_valid():
-        #     password_form.save()
     else:
         profile_form = UserProfileForm(instance=u_profile)
-        # password_form = PasswordChangeForm(user)
         user_form = UserForm(instance=user)
 
     return render(request, 'userprofile/user.html', {'profile_form': profile_form, 'user_form': user_form})
-    # return render(request, 'userprofile/user.html', {'profile_form': profile_form, 'user_form': user_form, 'password_form': password_form})
     # ----------------------------------------------------------------------------------------------------------
     # user = get_user(request)
     # if not user.is_anonymous():
@@ -126,16 +132,13 @@ def public_(request, user_name):
 
 
 def register_(request):
-    pass
+
     if request.method == "POST":
-        try:
-            user = User.objects.create_user(username=request.POST["nik_name"], email=request.POST["email"], password=request.POST["password"])
-        except(Exception):
-            error = "Ошибка регистрации"
-            return render(request, "userprofile/register.html", {"err_msg": error})
-        else:
-            user.save()
-            # login(request,user)
-            return HttpResponseRedirect(reverse('polls:index'))
+        userCrtForm = RegisterForm(request.POST)
+        if userCrtForm.is_valid():
+            userCrtForm.save()
+            return redirect('polls:index')
     else:
-        return render(request, "userprofile/register.html")
+        userCrtForm = RegisterForm()
+        return render(request, "userprofile/register.html", {"userCrtForm": userCrtForm})
+

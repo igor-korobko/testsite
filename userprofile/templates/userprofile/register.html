@@ -7,13 +7,7 @@
     <form action="{% url 'userprofile:register' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <p class="error">{{ err_msg }}</p>
-        <p>Логин:<input type="text" class="form-control"  name="nik_name"  /></p>
-        <!--<p>Имя: <input type="text" class="form-control"  name="first_name"  /></p>-->
-        <!--<p>Фамилия: <input type="text" class="form-control"  name="last_name"  /></p>-->
-        <p>Почта: <input type="email" class="form-control"  name="email"  /></p>
-        <p>Пароль: <input type="password" class="form-control" name="password" /></p>
-        <!--<p>O себе: <textarea class="form-control" name="about" ></textarea></p>-->
-        <!--<p>Фото: <input type="file" class="form-control" name="photo"/></p>-->
+            {{ userCrtForm }}
         <br/>
         <p><input type="submit" class="btn btn-primary fullwidth" name="save" value="Сохранить"/></p>
 
