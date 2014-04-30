@@ -31,7 +31,7 @@
                                     </div>
 
                                     {% for i in voteForm.rating %}
-                                        <div class="col-md-1" style="float:left;">
+                                        <div class="col-md-1" >
                                              {{ i }}
                                         </div>
                                     {% endfor %}
@@ -81,12 +81,9 @@
                 <a href="{% url 'userprofile:logout' %}" class="navbar-link" >Выйти</a>
                 <br />
         {% else %}
-            <!--<h4><a href="#" class="navbar-link" >Войти</a></h4>-->
             <h4>Войти</h4>
             <form method="post" action="{% url 'userprofile:login' %}">
                 {% csrf_token %}
-                <!--<input type="text" class="form-control" name="login" placeholder="Логин" /><br>-->
-                <!--<input type="password" class="form-control" name="pwd" placeholder="Пароль" /><br>-->
                 {% for elem in form %}
                 {{ elem }}<br />
                 {% endfor %}
