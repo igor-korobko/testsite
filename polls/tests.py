@@ -16,6 +16,11 @@ def create_cookie():
     return cookie
 
 
+def create_comment(user, cookie):
+    comment = Comments(user_id=user, cookie_id=cookie)
+    return comment
+
+
 def create_user():
     user = User()
     user.username = 'user'
@@ -33,13 +38,29 @@ class VoteViewTests(TestCase):
         cookie_id = cookie.pk
         cookie_rating = cookie.rating
         increment_value = int(VoteForm.Meta.CHOICES[0][0])
+        self.client.login(username='user', password='user')
         response = self.client.post(reverse('polls:vote'), {'rating': increment_value,
                                                             'vote_btn': 'vote_btn',
                                                             'cookie_id': cookie_id,
-                                                            "user": user,
                                                             })
 
-        self.assertEqual(cookie.rating, increment_value+cookie_rating)
+        new_cookie = Cookie.objects.get(pk=cookie_id)
+        self.assertEqual(new_cookie.rating, increment_value+cookie_rating)
+
+ # проверка сохраниения комментариев
+    def test_comment_saving(self):
+        user = create_user()
+        cookie = create_cookie()
+        cookie_id = cookie.pk
+        comment_text = "Comment text"
+        self.client.login(username='user', password='user')
+        response = self.client.post(reverse('polls:vote'), {'comment': comment_text,
+                                                            'vote_btn': 'vote_btn',
+                                                            'cookie_id': cookie_id,
+                                                            })
+
+        new_comment = Comments.objects.get(cookie_id=cookie_id, user_id=user.pk)
+        self.assertEqual(new_comment.comment, comment_text)
 
 
 
