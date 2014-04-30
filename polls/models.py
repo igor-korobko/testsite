@@ -22,7 +22,4 @@ class Comments(models.Model):
     comment = models.TextField()
 
 
-# class Relations(models.Model):
-#     user_id = models.ForeignKey(User)
-#     cookie_id = models.ForeignKey(Cookie)
 
