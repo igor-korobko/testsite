@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
-from django.template import RequestContext, loader
-from django.core.urlresolvers import reverse
 from polls.forms import VoteForm, CommentForm
 from polls.models import Cookie, Comments
-from django.contrib.auth import authenticate, login, get_user, logout
+from django.contrib.auth import get_user
 import functions
-from userprofile.forms import LoginForm
 
 
 def index(request):
@@ -24,41 +20,42 @@ def cookies_(request):
 
 def search(request):
     if 'search' in request.POST:
-        cookies = Cookie.objects.filter(name=request.POST['search'])
+        cookies = Cookie.objects.filter(name__contains=request.POST['search'])
         result = functions.get_all_forms(request, cookies)
         return render(request, "polls/cookies.html", result)
     else:
-        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+        return redirect(request.META['HTTP_REFERER'])
 
 
 def vote(request):
-    if 'vote_btn' in request.POST:
-        cookie_obj = get_object_or_404(Cookie, pk=request.POST['cookie_id'])
+    if not get_user(request).is_anonymous():
+        if 'vote_btn' in request.POST:
+            cookie_obj = get_object_or_404(Cookie, pk=request.POST['cookie_id'])
 
-        if "rating" in request.POST:
-            vote_form = VoteForm(request.POST, instance=cookie_obj)
-            old_rating = cookie_obj.rating
-            if vote_form.is_valid():
-                all_values = []
-                # // проверяем, полученное значение POST["rating"]
-                for radio_values in vote_form.Meta.CHOICES:
-                    all_values.append(radio_values[0])
-                # // что бы ещё не голосовал
-                if get_user(request) not in cookie_obj.user.all():
-                    # // если такое есть, то записываем
-                    if request.POST["rating"] in all_values:
-                        cookie_obj.rating = old_rating + int(request.POST["rating"])
-                        cookie_obj.user.add(get_user(request))
-                        cookie_obj.save()
-                        vote_form.save()
+            if "rating" in request.POST:
+                vote_form = VoteForm(request.POST, instance=cookie_obj)
+                old_rating = cookie_obj.rating
+                if vote_form.is_valid():
+                    all_values = []
+                    # // проверяем, полученное значение POST["rating"]
+                    for radio_values in vote_form.Meta.CHOICES:
+                        all_values.append(radio_values[0])
+                    # // что бы ещё не голосовал
+                    if get_user(request) not in cookie_obj.user.all():
+                        # // если такое есть, то записываем
+                        if request.POST["rating"] in all_values:
+                            cookie_obj.rating = old_rating + int(request.POST["rating"])
+                            cookie_obj.user.add(get_user(request))
+                            cookie_obj.save()
+                            vote_form.save()
 
-        if len(request.POST["comment"]) > 0:
-            comment_obj = Comments(cookie_id=cookie_obj, user_id=get_user(request))
-            comment_form = CommentForm(request.POST, instance=comment_obj)
-            if comment_form.is_valid():
-                cookie_obj.user.add(get_user(request))
-                cookie_obj.save()
-                comment_form.save()
+            if len(request.POST["comment"]) > 0:
+                comment_obj = Comments(cookie_id=cookie_obj, user_id=get_user(request))
+                comment_form = CommentForm(request.POST, instance=comment_obj)
+                if comment_form.is_valid():
+                    cookie_obj.user.add(get_user(request))
+                    cookie_obj.save()
+                    comment_form.save()
 
     return redirect(request.META['HTTP_REFERER'])
 

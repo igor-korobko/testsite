@@ -1,13 +1,12 @@
 from polls.forms import VoteForm, CommentForm
 from polls.models import Cookie, Comments
-from django.contrib.auth import authenticate, login, get_user
 from django.contrib.auth.models import User
 from userprofile.forms import LoginForm
 
 
 def get_all_forms(request, cookies):
+
     result = []
-    
     all_forms = {"cookies": cookies}
     all_forms.update({"voteForm": VoteForm()})
     all_forms.update({"commentForm": CommentForm()})
