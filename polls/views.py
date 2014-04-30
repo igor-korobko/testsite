@@ -60,18 +60,6 @@ def vote(request):
                 cookie_obj.save()
                 comment_form.save()
 
-
-
-        # cookie_obj = get_object_or_404(Cookie, pk=request.POST['cookie_id'])
-        # cookie_obj.rating += int(request.POST['choice'])
-        # cookie_obj.user.add(get_user(request))
-        # cookie_obj.save()
-        # if len(request.POST['comment']) > 0:
-        #     comment_obj = Comments(comment=request.POST['comment'], user_id=get_user(request), cookie_id=cookie_obj)
-        #     comment_obj.save()
-        # # r = Relations(user_id=get_user(request), cookie_id=p)
-        # # r.save()
-        # return render(request, "polls/cookies.html" )
     return redirect(request.META['HTTP_REFERER'])
 
 
