@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for testsite project.
 
@@ -7,6 +8,8 @@ https://docs.djangoproject.com/en/1.6/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
+
+import random
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -98,7 +101,7 @@ STATICFILES_DIRS = (
 )
 
 AUTH_PROFILE_MODULE = 'testsite.userprofile'
-
+# Добавляем в AUTHENTICATION_BACKENDS нужные бекенды,
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
@@ -122,3 +125,42 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.OpenIDBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+# Добавляем в TEMPLATE_CONTEXT_PROCESSORS процессор "social_auth_by_name_backends"
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.request',
+    'social_auth.context_processors.social_auth_by_name_backends',
+
+    'social_auth.context_processors.social_auth_backends',
+    'social_auth.context_processors.social_auth_by_type_backends',
+    'social_auth.context_processors.social_auth_login_redirect',
+)
+
+# Если имя не удалось получить, то можно его сгенерировать
+# SOCIAL_AUTH_DEFAULT_USERNAME = lambda: random.choice(['Darth_Vader', 'Obi-Wan_Kenobi', 'R2-D2', 'C-3PO', 'Yoda'])
+# Разрешаем создавать пользователей через social_auth
+SOCIAL_AUTH_CREATE_USERS = True
+
+# Перечислим pipeline, которые последовательно буду обрабатывать респонс
+SOCIAL_AUTH_PIPELINE = (
+    # Получает по backend и uid инстансы social_user и user
+    'social_auth.backends.pipeline.social.social_auth_user',
+    # Получает по user.email инстанс пользователя и заменяет собой тот, который получили выше.
+    # Кстати, email выдает только Facebook и GitHub, а Vkontakte и Twitter не выдают
+    'social_auth.backends.pipeline.associate.associate_by_email',
+    # Пытается собрать правильный username, на основе уже имеющихся данных
+    'social_auth.backends.pipeline.user.get_username',
+    # Создает нового пользователя, если такого еще нет
+    'social_auth.backends.pipeline.user.create_user',
+    # Пытается связать аккаунты
+    'social_auth.backends.pipeline.social.associate_user',
+    # Получает и обновляет social_user.extra_data
+    'social_auth.backends.pipeline.social.load_extra_data',
+    # Обновляет инстанс user дополнительными данными с бекенда
+    'social_auth.backends.pipeline.user.update_user_details'
+)
+
+
+TWITTER_CONSUMER_KEY = 'Bb7MQVu86oh6GwlgxpVTGK95J'
+TWITTER_CONSUMER_SECRET = '6yKwR1ilTajLZRZFDZCAtSWHuBURtWFBJybnwxty5JmltjKO8K'
+
