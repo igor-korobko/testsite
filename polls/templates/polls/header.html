@@ -28,5 +28,21 @@
                   </div>
                   <button type="submit" class="btn btn-default" value="find">{% trans "Найти" %}</button>
               </form>
+
+              <form method="post" action="" class="navbar-form navbar-right" role="search">
+                  {% csrf_token %}
+                  <div class="btn-group">
+                      <select class="btn" name="language">
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                        <option  value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                            {{ language.name_local }} ({{ language.code }})
+                        </option>
+                        {% endfor %}
+                      </select>
+                  </div>
+                  <button type="submit" class="btn" value="find">{% trans "Перевести" %}</button>
+              </form>
+
           </div>
         </nav>

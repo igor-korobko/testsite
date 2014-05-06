@@ -71,10 +71,13 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
+LANGUAGES = (('ru', "Russian"), ('en', 'English'), )
 
 LANGUAGE_CODE = 'ru-ru'
 # LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
+
+
 
 USE_I18N = True
 USE_L10N = True
@@ -136,6 +139,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'social_auth.context_processors.social_auth_backends',
     'social_auth.context_processors.social_auth_by_type_backends',
     'social_auth.context_processors.social_auth_login_redirect',
+
+    'django.core.context_processors.i18n',
 )
 
 # Если имя не удалось получить, то можно его сгенерировать

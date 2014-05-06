@@ -52,7 +52,7 @@ def index(request):
     # li = get_language_info(get_language())
     # print(li['name'], li['name_local'], li['bidi'])
     # raise()
-    translation.activate("en")
+    # translation.activate("en")
 
     return render(request, "polls/index.html", result)
 

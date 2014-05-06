@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^social/', include('social_auth.urls')),
     url(r'^accounts/profile/$', include('polls.urls')),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

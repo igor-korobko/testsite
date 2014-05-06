@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from models import Cookie, Comments
+from django.utils.translation import gettext as _
 
 
 class VoteForm(forms.ModelForm):
@@ -17,4 +18,4 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comments
         fields = ("comment",)
-        widgets = {"comment": forms.Textarea(attrs={"placeholder": "Отзыв","id": "poll_comment", "class": "form-control"}), }
+        widgets = {"comment": forms.Textarea(attrs={"placeholder": _("Отзыв"),"id": "poll_comment", "class": "form-control"}), }
