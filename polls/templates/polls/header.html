@@ -1,4 +1,6 @@
 {% load staticfiles %}
+{% load i18n %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,18 +15,18 @@
         <nav class="navbar navbar-default" role="navigation">
           <div class="container-fluid">
               <div class="navbar-header">
-                  <div class="navbar-brand" >Любителям печенек</div>
+                  <div class="navbar-brand" >{% trans "Любителям печенек" %}</div>
               </div>
               <ul class="nav navbar-nav">
-                <li><a href="{% url 'polls:index' %}">Главная</a></li>
-                <li><a href="{% url 'polls:cookies' %}">Печеньки</a></li>
+                <li><a href="{% url 'polls:index' %}">{% trans "Главная" %}</a></li>
+                <li><a href="{% url 'polls:cookies' %}">{% trans "Печеньки" %}</a></li>
               </ul>
               <form method="post" action="{% url 'polls:search' %}" class="navbar-form navbar-right" role="search">
                   {% csrf_token %}
                   <div class="form-group">
-                    <input name="search" type="text" class="form-control" placeholder="Название печеньки" />
+                    <input name="search" type="text" class="form-control" placeholder="{% trans "Название печеньки" %}" />
                   </div>
-                  <button type="submit" class="btn btn-default" value="find">Найти</button>
+                  <button type="submit" class="btn btn-default" value="find">{% trans "Найти" %}</button>
               </form>
           </div>
         </nav>
