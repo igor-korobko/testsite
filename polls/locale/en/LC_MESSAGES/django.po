@@ -1,0 +1,94 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-06 12:25+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: forms.py:21
+msgid "Отзыв"
+msgstr "Review"
+
+#: templates/polls/base.html:6
+msgid "Самые популярные печеньки"
+msgstr "Most popular cookies"
+
+#: templates/polls/base.html:32
+msgid "Оцените печеньку"
+msgstr "Rate cookie"
+
+#: templates/polls/base.html:47
+msgid "Проголосовать и оставить отзыв"
+msgstr "Vote and leave feedback"
+
+#: templates/polls/base.html:56
+msgid "Рейтинг печеньки"
+msgstr "Rating cookies"
+
+#: templates/polls/base.html:59
+msgid "Комментарии"
+msgstr "Comments"
+
+#: templates/polls/base.html:62
+msgid "написал"
+msgstr "wrote"
+
+#: templates/polls/base.html:72
+msgid "Таких печенек нет"
+msgstr "Such cookies do not"
+
+#: templates/polls/base.html:83
+msgid "Добро пожаловать"
+msgstr "Welcome"
+
+#: templates/polls/base.html:84
+msgid "Выйти"
+msgstr "Log out"
+
+#: templates/polls/base.html:87 templates/polls/base.html.py:93
+msgid "Войти"
+msgstr "Log in"
+
+#: templates/polls/base.html:94
+msgid "Зарегестрироваться"
+msgstr "Register"
+
+#: templates/polls/cookies.html:3
+msgid "Все печеньки"
+msgstr "All cookies"
+
+#: templates/polls/header.html:18
+msgid "Любителям печенек"
+msgstr "Cookie lovers"
+
+#: templates/polls/header.html:21
+msgid "Главная"
+msgstr "Home"
+
+#: templates/polls/header.html:22
+msgid "Печеньки"
+msgstr "Cookies"
+
+#: templates/polls/header.html:27
+msgid "Название печеньки"
+msgstr "Cookie name"
+
+#: templates/polls/header.html:29
+msgid "Найти"
+msgstr "Find"
+
+#: templates/polls/header.html:44
+msgid "Перевести"
+msgstr "Translate"
