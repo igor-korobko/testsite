@@ -1,1 +1,5 @@
-Django==1.6.2
+Django 1.6.2
+django-oauth2
+djangorestframework
+markdown
+django-filter

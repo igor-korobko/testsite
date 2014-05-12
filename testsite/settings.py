@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'polls',
     'userprofile',
     'social_auth',
+    'rest_framework'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -66,6 +67,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': ''
     }
 }
 
@@ -173,3 +178,15 @@ SOCIAL_AUTH_PIPELINE = (
 TWITTER_CONSUMER_KEY = 'Bb7MQVu86oh6GwlgxpVTGK95J'
 TWITTER_CONSUMER_SECRET = '6yKwR1ilTajLZRZFDZCAtSWHuBURtWFBJybnwxty5JmltjKO8K'
 
+REST_FRAMEWORK = {
+    # Use hyperlinked styles by default.
+    # Only used if the `serializer_class` attribute is not set on a view.
+    'DEFAULT_MODEL_SERIALIZER_CLASS':
+        'rest_framework.serializers.HyperlinkedModelSerializer',
+
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
